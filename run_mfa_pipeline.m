@@ -84,13 +84,13 @@ switch sf_mode
         sf_prefix = 'sf_q';
         for ti = ti_list
             fprintf('\n--- Timestep %i/%i (1D) ---\n', ti, ti_list(end))
-            sf_epsq_les_1step(run, var, ti, fd);
+            sf_epsq_les_1step(run, var, ti, fd, outputd);
         end
     case '2d'
         sf_prefix = 'sf2d_q';
         for ti = ti_list
             fprintf('\n--- Timestep %i/%i (2D) ---\n', ti, ti_list(end))
-            sf_epsq_2d_1step(run, var, ti, fd);
+            sf_epsq_2d_1step(run, var, ti, fd, outputd);
         end
     otherwise
         error('sf_mode must be ''1d'' or ''2d''')
