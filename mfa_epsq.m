@@ -34,6 +34,8 @@ fd      = './';
 sf_mode = '1d';
 if nargin >= 3, fd      = varargin{1}; end
 if nargin >= 4, sf_mode = varargin{2}; end
+if nargin >= 5, outputd = varargin{3}; end
+
 
 %% Build filenames and set grid spacing
 switch sf_mode
@@ -64,10 +66,10 @@ end
 sb = psd_data.sb;
 
 %% Load structure function data
-if ~exist(fullfile(fd, sf_str), 'file')
+if ~exist(fullfile(outputd, sf_str), 'file')
     error('Structure function file %s not found', sf_str)
 end
-mfa = load(fullfile(fd, sf_str));
+mfa = load(fullfile(outputd, sf_str));
 
 %% Scale breaks in log2 units relative to grid spacing
 l2sb = log2(sb / dx);
