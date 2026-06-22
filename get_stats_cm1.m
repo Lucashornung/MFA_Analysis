@@ -8,6 +8,10 @@ function get_stats_cm1(run, varargin)
 %
 %   get_stats_cm1(RUN, fd) reads from directory FD instead of './'.
 %
+%    
+%    get_stats_cm1(RUN, fd, outputd) writes the output file to the outputd directory 
+%    NOTE!!!! THIS FUNCTION WILL FAIL IN THE CASE THAT THERE IS AN OUTPUTD BUT NO FD PARAMETER
+%
 %   Dimension ordering is determined dynamically from the NetCDF metadata
 %   via nc_dims / nc_read, so the code is agnostic to whether the file
 %   uses (t,x,y,z), (x,y,z,t), or any other permutation.
@@ -104,7 +108,7 @@ for j = 1:length(vars)
 end
 
 %% Save
-save(fullfile(fd, sprintf('cm1_%s_stats.mat', run)), '-struct', 'out')
+save(fullfile(varargin{2}, sprintf('cm1_%s_stats.mat', run)), '-struct', 'out')
 fprintf('Saved cm1_%s_stats.mat (%i timesteps, %i levels)\n', run, nt, nz)
 
 end
