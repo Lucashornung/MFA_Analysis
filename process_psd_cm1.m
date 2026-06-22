@@ -52,7 +52,7 @@ switch var
     case {'w', 'q', 'qc', 'qr'}, outnm = sprintf('psd_%s_%s.mat', var, run);
     otherwise, error('Unrecognised variable: %s', var)
 end
-outpath = fullfile(fd, outnm);
+outpath = fullfile(varargin{3}, outnm);
 
 %% Check for partial output from a previous interrupted run
 i_start = 1;
@@ -130,7 +130,7 @@ for i = i_start:nt
 
     elapsed = toc;
     if elapsed > 18000 || i == nt || i == i_start
-        save(fullfile(fd, outnm), '-struct', 'psdo');
+        save(fullfile(varargin{3}, outnm), '-struct', 'psdo');
         fprintf('  Checkpoint at t=%i (%.1f min elapsed)\n', i, elapsed/60)
     end
 end
