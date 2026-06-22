@@ -98,7 +98,7 @@ end
 
 % Merge per-timestep SF files into a single file for mfa_epsq
 fprintf('\nMerging per-timestep structure function files...\n')
-merge_sf_files(run, var, ti_list, fd, sf_prefix);
+merge_sf_files(run, var, ti_list, outputd, sf_prefix);
 
 %% ========================================================================
 %  STAGE 4: Extract bifractal parameters
