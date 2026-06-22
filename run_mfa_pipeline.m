@@ -108,7 +108,7 @@ fprintf('\n=== STAGE 4: mfa_epsq ===\n')
 mfa = mfa_epsq(run, var, fd, sf_mode);
 
 % Save final output
-outfile = fullfile(fd, sprintf('mfa_%s%s_%s.mat', sf_prefix, var, run));
+outfile = fullfile(outputd, sprintf('mfa_%s%s_%s.mat', sf_prefix, var, run));
 save(outfile, '-struct', 'mfa')
 fprintf('\nFinal output saved to %s\n', outfile)
 
