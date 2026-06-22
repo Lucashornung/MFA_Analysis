@@ -137,14 +137,14 @@ end
 %% ========================================================================
 %  HELPER: Merge per-timestep SF output into one file
 %  ========================================================================
-function merge_sf_files(run, var, ti_list, fd, prefix)
+function merge_sf_files(run, var, ti_list, fd, prefix, outputd)
     outnm_base  = sprintf('%s%s_%s', prefix, var, run);
-    merged_file = fullfile(fd, [outnm_base, '.mat']);
+    merged_file = fullfile(outputd, [outnm_base, '.mat']);
 
     first = true;
     for ti = ti_list
         tstr    = sprintf('_%05i', ti);
-        step_fn = fullfile(fd, [outnm_base, tstr, '.mat']);
+        step_fn = fullfile(outputd, [outnm_base, tstr, '.mat']);
         if ~exist(step_fn, 'file')
             warning('Missing SF file for timestep %i: %s', ti, step_fn)
             continue
