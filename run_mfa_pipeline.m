@@ -28,7 +28,8 @@
 %  ========================================================================
 
 run = 'cm1out_000002';       % run identifier (matches filename <run>.nc)
-fd  = '~/Documents/Work/sct_les'; % directory containing the NetCDF file and output
+fd  = '~/Documents/Work/sct_les'; % directory containing the NetCDF file
+outputd = ''                 % directory for output files
 var = 'c';                  % variable to analyse: 'c' (cloud) or 'r' (rain)
 
 % Structure function mode:
@@ -46,11 +47,11 @@ ti_list = [];
 %  ========================================================================
 fprintf('\n=== STAGE 1: get_stats_cm1 ===\n')
 
-statsfile = fullfile(fd, sprintf('cm1_%s_stats.mat', run));
+statsfile = fullfile(outputd, sprintf('cm1_%s_stats.mat', run));
 if exist(statsfile, 'file')
     fprintf('Stats file already exists: %s\n', statsfile)
 else
-    get_stats_cm1(run, fd);
+    get_stats_cm1(run, fd, outputd);
 end
 
 %% ========================================================================
