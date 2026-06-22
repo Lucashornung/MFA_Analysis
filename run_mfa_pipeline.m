@@ -59,11 +59,11 @@ end
 %  ========================================================================
 fprintf('\n=== STAGE 2: process_psd_cm1 ===\n')
 
-psdfile = fullfile(fd, sprintf('psd_q%s_%s.mat', var, run));
+psdfile = fullfile(outputd, sprintf('psd_q%s_%s.mat', var, run));
 if exist(psdfile, 'file')
     fprintf('PSD file already exists: %s\n', psdfile)
 else
-    process_psd_cm1(run, var, fd);
+    process_psd_cm1(run, var, fd, outputd);
 end
 
 %% ========================================================================
