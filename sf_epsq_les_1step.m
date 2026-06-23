@@ -1,10 +1,10 @@
-function sf_epsq_les_1step(run, var, ti, varargin)
-% SF_EPSQ_LES_1STEP  1D structure functions for one timestep of CM1 output.
 %
 %   sf_epsq_les_1step(RUN, VAR, TI) computes 1D structure functions and
 %   singularity measures for variable VAR at timestep index TI.
 %
 %   sf_epsq_les_1step(RUN, VAR, TI, fd) reads from directory FD.
+%
+%   sf_epsq_les_1step(RUN, VAR, TI, fd, outputd) reads stats and psd files from a seperate output directory.
 %
 %   Dimension ordering is determined dynamically via nc_dims / nc_read.
 
@@ -15,6 +15,10 @@ if nargin > 3
     fd = varargin{1};
 else
     fd = './';
+end
+
+if nargin > 4
+    out = varargin{2};
 end
 
 %% Structure function orders
@@ -55,8 +59,8 @@ switch var
         error('Variable %s not configured for multifractal analysis', var)
 end
 
-stats = load(fullfile(fd, sprintf('cm1_%s_stats.mat', run)), loadvars{:});
-psd   = load(fullfile(fd, sprintf('psd_q%s_%s.mat', var, run)), 'slope');
+stats = load(fullfile(out, sprintf('cm1_%s_stats.mat', run)), loadvars{:});
+psd   = load(fullfile(out, sprintf('psd_q%s_%s.mat', var, run)), 'slope');
 
 cfrac = stats.cfrac;
 if isfield(stats, 'rfrac'), rfrac = stats.rfrac; end
