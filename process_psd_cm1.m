@@ -61,7 +61,6 @@ switch var
     otherwise, error('Unrecognised variable: %s', var)
 end
 outpath = fullfile(out, outnm);
-fprintf('TROUBLE SHOOTING \n')
 
 
 %% Check for partial output from a previous interrupted run
