@@ -53,7 +53,7 @@ switch var
 end
 
 % Grid spacing: read from PSD file if available, otherwise set manually
-psd_data = load(fullfile(fd, sb_str), 'sb', 'r');
+psd_data = load(fullfile(outputd, sb_str), 'sb', 'r');
 if isfield(psd_data, 'r')
     % Infer dx from the PSD length-scale array and normalised wavenumber
     % For now, use a fixed value consistent with the CM1 configuration.
