@@ -7,15 +7,23 @@ function process_psd_cm1(run, var, varargin)
 %
 %   process_psd_cm1(RUN, VAR, fd) reads from directory FD.
 %
+%
+%   process_psd_cm1(RUN, VAR, fd, outputd) reads from directory FD.
+%
 %   Dimension ordering is determined dynamically via nc_dims / nc_read.
 
 tic
+
 
 %% Parse input
 if nargin > 2
     fd = varargin{1};
 else
     fd = './';
+end
+
+if nargin > 3
+    out = varargin{2};
 end
 
 %% Build file path and NetCDF variable name
@@ -37,7 +45,7 @@ nx = dsz.x;  ny = dsz.y;  nz = dsz.z;  nt = dsz.t;
 
 %% Load domain-mean stats (for cloud-top diagnosis)
 statnm   = sprintf('cm1_%s_stats.mat', run);
-statpath = fullfile(fd, statnm);
+statpath = fullfile(out, statnm);
 if exist(statpath, 'file')
     stats = load(statpath);
     sflag = true;
@@ -52,7 +60,9 @@ switch var
     case {'w', 'q', 'qc', 'qr'}, outnm = sprintf('psd_%s_%s.mat', var, run);
     otherwise, error('Unrecognised variable: %s', var)
 end
-outpath = fullfile(varargin{2}, outnm);
+outpath = fullfile(out, outnm);
+fprintf('TROUBLE SHOOTING \n')
+
 
 %% Check for partial output from a previous interrupted run
 i_start = 1;
@@ -63,6 +73,7 @@ if exist(outpath, 'file')
         fprintf('Resuming from timestep %i/%i\n', i_start, nt)
     end
 end
+
 
 %% Cloud-variable flag for slope fitting
 is_cloud_var = any(strcmp(var, {'c', 'l'}));
@@ -130,7 +141,7 @@ for i = i_start:nt
 
     elapsed = toc;
     if elapsed > 18000 || i == nt || i == i_start
-        save(fullfile(varargin{2}, outnm), '-struct', 'psdo');
+        save(fullfile(out, outnm), '-struct', 'psdo');
         fprintf('  Checkpoint at t=%i (%.1f min elapsed)\n', i, elapsed/60)
     end
 end
