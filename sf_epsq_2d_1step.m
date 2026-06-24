@@ -6,6 +6,8 @@ function sf_epsq_2d_1step(run, var, ti, varargin)
 %
 %   sf_epsq_2d_1step(RUN, VAR, TI, fd) reads from directory FD.
 %
+%   sf_epsq_2d_1step(RUN, VAR, TI, fd, outputd) reads stats and psd files from a seperate output directory.
+%
 %   Dimension ordering is determined dynamically via nc_dims / nc_read.
 
 tStart = tic;
@@ -15,6 +17,10 @@ if nargin > 3
     fd = varargin{1};
 else
     fd = './';
+end
+
+if nargin > 4
+    outd = varargin{2};
 end
 
 %% Structure function orders
@@ -60,8 +66,8 @@ switch var
         error('Variable %s not configured for 2D multifractal analysis', var)
 end
 
-stats = load(fullfile(fd, sprintf('cm1_%s_stats.mat', run)), loadvars{:});
-psd   = load(fullfile(fd, sprintf('psd_q%s_%s.mat', var, run)), 'slope');
+stats = load(fullfile(outd, sprintf('cm1_%s_stats.mat', run)), loadvars{:});
+psd   = load(fullfile(outd, sprintf('psd_q%s_%s.mat', var, run)), 'slope');
 
 cfrac = stats.cfrac;
 if isfield(stats, 'rfrac'), rfrac = stats.rfrac; end
@@ -80,7 +86,7 @@ slopet = slope(:, ti);
 
 %% Set output filename
 tstr   = sprintf('_%05i', ti);
-outnmt = fullfile(varargin{2}, [outnm, tstr, '.mat']);
+outnmt = fullfile(outd, [outnm, tstr, '.mat']);
 
 %% Short-circuit if no levels meet threshold
 top = find(frac > thresh, 1, 'last');
