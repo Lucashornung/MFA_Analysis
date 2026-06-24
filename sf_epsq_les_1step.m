@@ -81,7 +81,7 @@ slopet = slope(:, ti);
 
 %% Set output filename
 tstr   = sprintf('_%05i', ti);
-outnmt = fullfile(varargin{2}, strcat(outnm, tstr, '.mat'));
+outnmt = fullfile(outd, strcat(outnm, tstr, '.mat'));
 
 %% Short-circuit if no levels meet threshold
 top = find(frac > thresh, 1, 'last');
